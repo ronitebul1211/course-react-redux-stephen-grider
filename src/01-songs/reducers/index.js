@@ -1,3 +1,5 @@
+import { combineReducer } from "redux";
+
 /**
   Reducers
    - - reducer made for learning process - - 
@@ -22,3 +24,8 @@ const selectedSongReducer = (selectedSong = null, action) => {
    }
    return selectedSong;
 };
+
+export default combineReducer({
+   songs: songsReducer,
+   selectedSong: selectedSongReducer,
+});
