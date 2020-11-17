@@ -1,9 +1,12 @@
 import React from "react";
+import SongList from "./SongList";
 
 const SongsApp = () => {
    return (
       <div className="songs-app">
-         <div>SongsApp</div>
+         <div>
+            <SongList />
+         </div>
       </div>
    );
 };
