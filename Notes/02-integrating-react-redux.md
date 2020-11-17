@@ -21,3 +21,13 @@ provider send initial data + updates to connect component,
 the connect component will pass data via props to relevant component.
 if want that component wrapped by connect will be able to update state via action creator,  
 we need to pass connect components extra configuration, and it will pass to reference to action creator via props to relevant component.
+
+# Project Structure
+
+-  actions
+-  components
+-  reducers
+-  index.js
+
+as convention index.js file will crete in action, reducers directories.  
+when imported, path to the directory will auto import index files.
