@@ -44,3 +44,15 @@ redux-thunk is a middleware that helps to make network requests from reducers.
    Breaking the rules of action creators:  
    get **Error**: Action must be plains objects.
    Use custom middleware for async actions
+
+### Whats Wrong ?
+
+-  **Action creators must return plain JS objects with a type property (it is not!)**  
+   async await syntax has gets transpired down to ES2015 to run on browser,  
+    the code run on browser different from the ES6 written code.  
+   instead of returning action object, request object returned first. (babel IO)
+
+-  **by the time actions gets to a reducer, data wasn't fetched**  
+   even if we remove async await syntax, and save to promise instead.  
+   because the following flow execute in fraction of second:  
+   Action creator called -> Action returned -> Action sent to all reducers -> Reducers run
