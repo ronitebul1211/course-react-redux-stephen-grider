@@ -14,4 +14,11 @@ import { createStore } from "redux";
 
 // 01 - Blog App
 import BlogApp from "./02-blog/components/BlogApp";
-ReactDOM.render(<BlogApp />, document.querySelector("#root"));
+import reducers from "./02-blog/reducers";
+
+ReactDOM.render(
+   <Provider store={createStore(reducers)}>
+      <BlogApp />
+   </Provider>,
+   document.querySelector("#root"),
+);
