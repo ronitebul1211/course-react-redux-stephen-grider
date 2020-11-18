@@ -56,12 +56,11 @@ when imported, path to the directory will auto import index files.
       </Provider>
       ```
 
-4. **configure connect component inside state consumer component**
+4. **configure Connect component to Consume state**
 
    -  import { connect } from react-redux
-   -  define outside of component (class / function) above export statement  
-       function that get called with app state, and return the part that component want to "listen / watch"  
-      key pass in to current component as props.
+   -  define mapStateToProps function, that get app state and return an object  
+      represent state piece that this component want to "watch" as it updated and get as props
 
       ```
       // name by convention
@@ -74,6 +73,31 @@ when imported, path to the directory will auto import index files.
       ```
       export default connect(mapStateToProps)(SongList);
       ```
-      connect function first arg is define which part of state is going to passed as props to current component.  
-       the second arg passed as an arg to inner function return from connect.
-   -  from component props there is an access to relevant state, dispatch function
+   -  pass to second parenthesis ref to current component its passed to inner function  
+      that return from connect with wrapped component (for passing additional props).
+   -  Now component props there is an access to relevant state, dispatch function.
+
+5. **configure Connect component to Set state**
+
+   -  import relevant action creators
+   -  pass to connect function second arg -> action creator functions object  
+      consist from key value paris of function name + ref
+      ```
+      const actionCreatorsObject = {actionCreator1, actionCreator2}
+      export default connect(mapStateToProps, { selectSong })(SongList);
+      ```
+      **NOTE**  
+      when action creators object passed to connect fun,  
+      the ref to dispatch fun replaced by ref to passed action creators func.
+   -  **Why we didn't use action creator directly**  
+       **instead of passing it to connect function and get reference from props?**
+      -  Redux doesn't automatically detect action creator being called
+      -  Redux doesn't automatically detect function returning action object
+   -  **So, What happen ?**  
+       action creator declare as plain JS function and imported to component who need to update state  
+       if its get called directly it will return an action object, and that it!  
+       to deliver action to the reducer -> dispatch(action) should get called  
+      when functions object passed to connect function,  
+      its wrap each of these function
+      in new function that will create an action and dispatch it,  
+       reference to the new function passed to the component via props.
