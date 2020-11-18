@@ -26,3 +26,21 @@ redux-thunk is a middleware that helps to make network requests from reducers.
 -  component's responsible fetching data they need by calling action creator.
 -  action creator responsible for making API request (with redux thunk)
 -  updated state, will send to state consumers via props after update
+
+# Making network request from Action Creator
+
+-  **BAD APPROACH !**
+
+   ```
+   export const fetchPosts = async () => {
+     const response = await jsonPlaceholder.get("/posts");
+     return {
+         type: "FETCH_POST",
+         payload: response,
+     };
+   };
+   ```
+
+   Breaking the rules of action creators:  
+   get **Error**: Action must be plains objects.
+   Use custom middleware for async actions
