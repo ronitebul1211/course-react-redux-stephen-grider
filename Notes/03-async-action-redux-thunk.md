@@ -56,3 +56,31 @@ redux-thunk is a middleware that helps to make network requests from reducers.
    even if we remove async await syntax, and save to promise instead.  
    because the following flow execute in fraction of second:  
    Action creator called -> Action returned -> Action sent to all reducers -> Reducers run
+
+### Middleware in Redux
+
+when action creator executes in an async way, middleware needed.  
+Action creator -> Action -> dispatch -> middleware -> reducers -> state
+
+-  middleware function get called with every dispatched action.
+-  it has the ability to stop / modify / mess around with actions
+
+### Action Creator rules
+
+-  Sync
+   -  must return an action object
+   -  that object must have type property
+   -  optionally have payload
+-  Async
+   -  must return action object OR function
+   -  if object must have type property
+   -  if object optionally have payload
+
+### Behind the Scenes of Redux Thunk
+
+1. dispatch function pass return value (object/function) from action creator -> to middleware.
+2. redux thunk test action
+3. if it's an object it pass it to reducers.
+4.
+
+manually dispatch an action
