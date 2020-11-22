@@ -9,8 +9,8 @@ create 2 components of type:
 1. Provider
 2. Connect
 
-the **store** object, passed in to the **provider** component,  
-that should be the root of app hierarchy (wrap app component).  
+the **store** object (createStore(reducers)), passed to the **provider** component via props,  
+that wrap app component.  
 **provider** get reference to **store** holding **state** and it can provide it to the all app.  
 each component that need an access to the **state** will be wrap with **connect** component.  
 the **connect** component communicate with the **provider** via context system,  
@@ -59,8 +59,8 @@ when imported, path to the directory will auto import index files.
 4. **configure Connect component to Consume state**
 
    -  import { connect } from react-redux
-   -  define mapStateToProps function, that get app state and return an object  
-      represent state piece that this component want to "watch" as it updated and get as props
+   -  define mapStateToProps function - define what piece of state current component will get via props.  
+      the function get app state and return an object represent state piece component "watch" for.
 
       ```
       // name by convention
@@ -69,7 +69,7 @@ when imported, path to the directory will auto import index files.
       };
       ```
 
-   -  update export statement ->
+   -  update export statement (wrapping the component with connect component)->
       ```
       export default connect(mapStateToProps)(SongList);
       ```
@@ -84,11 +84,11 @@ when imported, path to the directory will auto import index files.
       consist from key value paris of function name + ref
       ```
       const actionCreatorsObject = {actionCreator1, actionCreator2}
-      export default connect(mapStateToProps, { selectSong })(SongList);
+      export default connect(mapStateToProps, actionCreatorsObject )(SongList);
       ```
       **NOTE**  
       when action creators object passed to connect fun,  
-      the ref to dispatch fun replaced by ref to passed action creators func.
+      the ref to dispatch fun replaced by ref to passed action creators func (in props).
    -  **Why we didn't use action creator directly**  
        **instead of passing it to connect function and get reference from props?**
       -  Redux doesn't automatically detect action creator being called
