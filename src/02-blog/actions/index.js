@@ -1,23 +1,11 @@
 import jsonPlaceholder from "../apis/jsonPlaceholder";
 
-/**
- * Action object : {
- *    type: "FETCH_POST"
- *    payload: <optional>
- * }
- */
-
-export const fetchPosts = async () => {
+export const fetchPosts = async () => async (dispatch) => {
    const response = await jsonPlaceholder.get("/posts");
-   console.log(response);
-   return {
-      type: "FETCH_POST",
-      payload: response,
-   };
+   dispatch({ type: "FETCH_POSTS", payload: response });
 };
 
 /**
- Breaking the rules of action creators
- get error: Action must be plains objects. 
-            Use custom middleware for async actions
+ * Syntax
+ * fetch post is async arrow function that return anonymous function that make network request and dispatch it
  */
