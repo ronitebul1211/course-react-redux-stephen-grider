@@ -78,9 +78,31 @@ Action creator -> Action -> dispatch -> middleware -> reducers -> state
 
 ### Behind the Scenes of Redux Thunk
 
-1. dispatch function pass return value (object/function) from action creator -> to middleware.
-2. redux thunk test action
-3. if it's an object it pass it to reducers.
-4.
+1. Action creator return object (sync) / function (async)
+2. dispatch() pass the returned value from the action creator to the thunk middleware
+3. redux thunk test action
 
-manually dispatch an action
+   -  Object case: redux-thunk pass the action object to the reducers
+   -  Function case:
+
+      -  redux thunk invoke the function with 2 args: dispatchRef, getStateRef
+      -  inside that function dispatch going to get called manually when async operation will end and pass an action object.
+      -  action object passed to the reducers
+      -  redux-thunk implementation
+
+      ```
+      function createThunkMiddleware(extraArgument) {
+         return ({ dispatch, getState }) => (next) => (action) => {
+            if (typeof action === 'function') {
+               return action(dispatch, getState, extraArgument);
+            }
+
+            return next(action);
+         };
+      }
+
+      const thunk = createThunkMiddleware();
+      thunk.withExtraArgument = createThunkMiddleware;
+
+      export default thunk;
+      ```
