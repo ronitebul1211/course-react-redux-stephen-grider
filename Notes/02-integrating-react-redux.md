@@ -64,23 +64,30 @@ when imported, path to the directory will auto import index files.
 
       ```
       // name by convention
-      const mapStateToProps = (state) => {
+      const mapStateToProps = (state, ownProps) => {
          return { songs: state.songs };
       };
       ```
 
+   -  second arg of this function is ownProps, get current props value of the component  
+      if needed to preform some calculation and define the data -> return specific usr from the list
+      ```
+      const mapStateToProps = (state, ownProps) => {
+         return { user: state.users.find((user) => user.id === ownProps.userId) };
+      };
+      ```
    -  update export statement (wrapping the component with connect component)->
       ```
       export default connect(mapStateToProps)(SongList);
       ```
-   -  pass to second parenthesis ref to current component its passed to inner function  
+   -  pass to second parenthesis ref to current component its passed to inner function
       that return from connect with wrapped component (for passing additional props).
    -  Now component props there is an access to relevant state, dispatch function.
 
 5. **configure Connect component to Set state**
 
    -  import relevant action creators
-   -  pass to connect function second arg -> action creator functions object  
+   -  pass to connect function second arg -> action creator functions object
       consist from key value paris of function name + ref
       ```
       const actionCreatorsObject = {actionCreator1, actionCreator2}
@@ -90,18 +97,22 @@ when imported, path to the directory will auto import index files.
       ```
       props.actionCreator1(arg...)
       ```
-      **NOTE**  
-       when action creators object passed to connect fun,  
-       the ref to dispatch fun replaced by ref to passed action creators func (in props).
-   -  **Why we didn't use action creator directly**  
-       **instead of passing it to connect function and get reference from props?**
+      **NOTE**
+      when action creators object passed to connect fun,
+      the ref to dispatch fun replaced by ref to passed action creators func (in props).
+   -  **Why we didn't use action creator directly**
+      **instead of passing it to connect function and get reference from props?**
       -  Redux doesn't automatically detect action creator being called
       -  Redux doesn't automatically detect function returning action object
-   -  **So, What happen ?**  
-       action creator declare as plain JS function and imported to component who need to update state  
-       if its get called directly it will return an action object, and that it!  
-       to deliver action to the reducer -> dispatch(action) should get called  
-      when functions object passed to connect function,  
+   -  **So, What happen ?**
+      action creator declare as plain JS function and imported to component who need to update state
+      if its get called directly it will return an action object, and that it!
+      to deliver action to the reducer -> dispatch(action) should get called
+      when functions object passed to connect function,
       its wrap each of these function
-      in new function that will create an action and dispatch it,  
-       reference to the new function passed to the component via props.
+      in new function that will create an action and dispatch it,
+      reference to the new function passed to the component via props.
+
+```
+
+```
