@@ -106,3 +106,36 @@ Action creator -> Action -> dispatch -> middleware -> reducers -> state
 
       export default thunk;
       ```
+
+# Integrate Redux Thunk in App
+
+-  index.js file (App)
+   ```
+   import thunk from "redux-thunk";
+   import { applyMiddleware } from "redux";
+   ```
+-  create thunk middleware by sending thunk to apply middleware function
+-  pass the middleware object as second arg to create store function
+
+   ```
+   const store = createStore(reducers, applyMiddleware(thunk));
+
+   ReactDOM.render(
+      <Provider store={store}>
+         <BlogApp />
+      </Provider>,
+      document.querySelector("#root"),
+   );
+   ```
+
+-  define inside async action creator function that execute async operation  
+   and invoke manually dispatch function with an action object.
+
+```
+export const fetchPosts = async () => {
+   return async function (dispatch, getState) {
+      const response = await jsonPlaceholder.get("/posts");
+      dispatch({ type: "FETCH_POSTS", payload: response });
+   };
+};
+```
