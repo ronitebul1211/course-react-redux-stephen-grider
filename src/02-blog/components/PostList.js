@@ -1,6 +1,7 @@
-import { Component } from "react";
+import { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { fetchPosts } from "../actions";
+import UserHeader from "./UserHeader";
 
 class PostList extends Component {
    componentDidMount() {
@@ -11,7 +12,10 @@ class PostList extends Component {
       return (
          <div className="ui relaxed divided list">
             {this.props.posts.map((post) => (
-               <Post key={post.id} title={post.title} body={post.body} />
+               <div key={post.id} className="item">
+                  <Post title={post.title} body={post.body} />
+                  <UserHeader userId={post.userId} />
+               </div>
             ))}
          </div>
       );
@@ -26,12 +30,12 @@ export default connect(mapStateToProps, { fetchPosts })(PostList);
 
 const Post = ({ title, body }) => {
    return (
-      <div className="item">
+      <Fragment>
          <i className="large middle aligned icon user" />
          <div className="content">
             <h2>{title}</h2>
             <p>{body}</p>
          </div>
-      </div>
+      </Fragment>
    );
 };
