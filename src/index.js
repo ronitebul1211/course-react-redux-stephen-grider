@@ -16,10 +16,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import BlogApp from "./02-blog/components/BlogApp";
-import reducers from "./02-blog/reducers";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import BlogApp from "./02-blog/components/BlogApp";
+import reducers from "./02-blog/reducers";
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
