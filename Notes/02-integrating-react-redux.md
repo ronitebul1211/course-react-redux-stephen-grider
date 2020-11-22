@@ -86,9 +86,13 @@ when imported, path to the directory will auto import index files.
       const actionCreatorsObject = {actionCreator1, actionCreator2}
       export default connect(mapStateToProps, actionCreatorsObject )(SongList);
       ```
+   -  set state via action creator
+      ```
+      props.actionCreator1(arg...)
+      ```
       **NOTE**  
-      when action creators object passed to connect fun,  
-      the ref to dispatch fun replaced by ref to passed action creators func (in props).
+       when action creators object passed to connect fun,  
+       the ref to dispatch fun replaced by ref to passed action creators func (in props).
    -  **Why we didn't use action creator directly**  
        **instead of passing it to connect function and get reference from props?**
       -  Redux doesn't automatically detect action creator being called
